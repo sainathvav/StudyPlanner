@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">StudyPlanner</string>
+    <string name="study_plan">Study Plan</string>
+    <string name="assignments">Assignments</string>
+    <string name="exams">Exams</string>
+    <string name="lectures">Lectures</string>
+</resources>
