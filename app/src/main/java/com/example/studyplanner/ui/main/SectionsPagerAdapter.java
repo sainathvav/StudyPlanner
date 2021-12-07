@@ -1,6 +1,7 @@
 package com.example.studyplanner.ui.main;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.studyplanner.R;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.study_plan, R.string.assignments, R.string.exams, R.string.lectures};
@@ -60,7 +63,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
+        // Show 4 total pages.
         return 4;
     }
 }

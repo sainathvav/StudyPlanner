@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.format.DateFormat;
@@ -95,6 +96,9 @@ public class AddEventActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(AddEventActivity.this, "Failed to add new event", Toast.LENGTH_LONG).show();
                 }
+                Intent intent = new Intent(AddEventActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
