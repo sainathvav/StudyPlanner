@@ -6,6 +6,24 @@ public class Event {
     private String Date;
     private String Time;
     private String Description;
+    private int ID;
+
+    public Event(int ID, String type, String title, String date, String time, String description) {
+        Type = type;
+        Title = title;
+        Date = date;
+        Time = time;
+        Description = description;
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public Event() {
     }

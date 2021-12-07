@@ -2,9 +2,13 @@ package com.example.studyplanner;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public DataBaseHelper(Context context) {
@@ -40,6 +44,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    public List<Event> getAllEvents(String type){
+        List<Event> eventList = new ArrayList<>();
+        String query = "";
+
+        if (type.equals("STUDY PLAN")) {
+            query = "SELECT * FROM EVENTS_TABLE WHERE EVENT_TYPE='STUDY PLAN'";
+        }
+        else if (type.equals("ASSIGNMENTS")) {
+            query = "SELECT * FROM EVENTS_TABLE WHERE EVENT_TYPE='ASSIGNMENTS'";
+        }
+        else if (type.equals("EXAMS")) {
+            query = "SELECT * FROM EVENTS_TABLE WHERE EVENT_TYPE='EXAMS'";
+        }
+        else {
+            query = "SELECT * FROM EVENTS_TABLE WHERE EVENT_TYPE='LECTURES'";
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int ID = cursor.getInt(0);
+                String eventType = cursor.getString(1);
+                String title = cursor.getString(2);
+                String date = cursor.getString(3);
+                String time = cursor.getString(4);
+                String description = cursor.getString(5);
+                Event event = new Event(ID, eventType, title, date, time, description);
+                eventList.add(event);
+            }
+            while(cursor.moveToNext());
+        }
+        return eventList;
     }
 
 }
