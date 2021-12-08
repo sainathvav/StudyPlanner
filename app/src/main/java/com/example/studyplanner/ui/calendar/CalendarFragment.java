@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,8 @@ import com.example.studyplanner.DateEvent;
 import com.example.studyplanner.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +41,7 @@ public class CalendarFragment extends Fragment {
     TextView dateView;
     CompactCalendarView compCalendar;
     TextView month;
+    TextView studyCount, assignCount, examCount, lectureCount;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +58,11 @@ public class CalendarFragment extends Fragment {
         dateView = (TextView)root.findViewById(R.id.dateView);
         compCalendar = root.findViewById(R.id.compactcalendar_view);
         month = root.findViewById(R.id.monthView);
+        studyCount = (TextView) root.findViewById(R.id.studyCount);
+        assignCount = (TextView) root.findViewById(R.id.assignCount);
+        examCount = (TextView) root.findViewById(R.id.examCount);
+        lectureCount = (TextView) root.findViewById(R.id.lectureCount);
+
         Calendar cal = Calendar.getInstance();
 
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
@@ -88,7 +97,15 @@ public class CalendarFragment extends Fragment {
                 String date = (String) DateFormat.format("dd/MM/yyyy",dateClicked);
 
                 // function to display data
-
+                //Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
+                DateEvent dateEvent = dataBaseHelper.getEventCount(date);
+                if (dateEvent != null) {
+                    studyCount.setText(Integer.toString(dateEvent.getStudyCount()));
+                    assignCount.setText(Integer.toString(dateEvent.getAssignCount()));
+                    examCount.setText(Integer.toString(dateEvent.getExamsCount()));
+                    lectureCount.setText(Integer.toString(dateEvent.getLectureCount()));
+                }
             }
 
             @Override

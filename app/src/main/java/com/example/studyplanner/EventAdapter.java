@@ -1,5 +1,6 @@
 package com.example.studyplanner;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") final int position) {
         String eventTitle = list.get(position).getTitle();
         String eventDate = list.get(position).getDate();
         String eventTime = list.get(position).getTime();
@@ -42,6 +43,22 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyHolder> {
         holder.date.setText(eventDate);
         holder.time.setText(eventTime);
         holder.description.setText(eventDescription);
+
+        holder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(v.getContext());
+                boolean result = dataBaseHelper.removeEvent(list.get(position));
+                if (result) {
+                    Toast.makeText(v.getContext(), "Successfully removed the event",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(v.getContext(), LeftSlideBarActivity.class);
+                    context.startActivity(intent);
+                }
+                else {
+                    //Toast.makeText(v.getContext(), "Failed",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 

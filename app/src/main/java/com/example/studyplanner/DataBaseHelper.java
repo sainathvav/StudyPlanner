@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -45,6 +47,59 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    public boolean removeEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String type = "'" + event.getType() + "'";
+        String title = "'" + event.getTitle() + "'";
+        String date  = "'" + event.getDate() + "'";
+        String time = "'" + event.getTime() + "'";
+        String description = "'" + event.getDescription() + "'";
+        String query = "";
+        query = "DELETE FROM EVENTS_TABLE WHERE EVENT_TYPE=" + type + " AND EVENT_TITLE=" + title + " AND EVENT_DATE=" + date
+                    + " AND EVENT_TIME=" + time + " AND EVENT_DESCRIPTION=" + description;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+            }
+            while (cursor.moveToNext());
+            return true;
+        }
+        return false;
+    }
+
+    public DateEvent getEventCount(String date) {
+        String query = "";
+        query = "SELECT * FROM EVENTS_TABLE WHERE EVENT_DATE=" + "'" + date + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int studyCount = 0;
+        int assignCount = 0;
+        int examsCount = 0;
+        int lectureCount = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                String eventType = cursor.getString(1);
+                if (eventType.equals("STUDY PLAN")) {
+                    studyCount++;
+                }
+                else if (eventType.equals("ASSIGNMENTS")) {
+                    assignCount++;
+                }
+                else if (eventType.equals("EXAMS")) {
+                    examsCount++;
+                }
+                else if (eventType.equals("LECTURES")) {
+                    lectureCount++;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+        DateEvent dateEvent = new DateEvent(lectureCount, assignCount, examsCount, studyCount);
+        return dateEvent;
     }
 
     public List<Event> getAllEvents(String type){

@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.format.DateFormat;
@@ -66,8 +67,15 @@ public class AddEventActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-
-                                dateVal = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                                String month = Integer.toString(monthOfYear+1);
+                                if (month.length() == 1) {
+                                    month = "0" + month;
+                                }
+                                String day = Integer.toString(dayOfMonth);
+                                if (day.length() == 1) {
+                                    day = "0" + day;
+                                }
+                                dateVal = day + "/" + month + "/" + year;
                                 eventDate.setText(dateVal);
 
                             }
@@ -81,7 +89,34 @@ public class AddEventActivity extends AppCompatActivity {
         eventTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog();
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        String type = "AM";
+                        if (selectedHour == 0) {
+                            selectedHour = 12;
+                        }
+                        else if (selectedHour == 12) {
+                            type = "PM";
+                        }
+                        else {
+                            selectedHour = selectedHour%12;
+                            type = "PM";
+                        }
+                        String hour = Integer.toString(selectedHour);
+                        String minute = Integer.toString(selectedMinute);
+                        if (minute.length() == 1) {
+                            minute = "0"+minute;
+                        }
+                        eventTime.setText( selectedHour + ":" + minute + " " + type);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
             }
         });
 
@@ -90,6 +125,7 @@ public class AddEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(AddEventActivity.this);
+
                 boolean result = dataBaseHelper.addEvent(new Event(type, eventTitle.getText().toString(),
                         eventDate.getText().toString(), eventTime.getText().toString(), eventDescription.getText().toString()));
                 if (result) {
@@ -103,38 +139,6 @@ public class AddEventActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    public static class TimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-
-            return new TimePickerDialog(getActivity(), this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
-        }
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            String tag = "AM";
-            if (hourOfDay >= 12) {
-                tag = "PM";
-            }
-            if (hourOfDay > 12) {
-                hourOfDay = hourOfDay%12;
-            }
-            String timeStr = Integer.toString(hourOfDay) + " : " + Integer.toString(minute) + " " + tag;
-            //eventTime.setText(timeStr);
-        }
-    }
-
-    public void showTimePickerDialog() {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
 }
