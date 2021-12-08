@@ -50,7 +50,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyHolder> {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(v.getContext());
                 boolean result = dataBaseHelper.removeEvent(list.get(position));
 
-                //Toast.makeText(v.getContext(), "Successfully removed the event",Toast.LENGTH_LONG).show();
+                Toast.makeText(v.getContext(), "Successfully removed the event",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(v.getContext(), LeftSlideBarActivity.class);
                 context.startActivity(intent);
 
