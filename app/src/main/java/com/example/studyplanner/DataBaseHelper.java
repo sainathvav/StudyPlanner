@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -80,5 +81,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return eventList;
     }
+
+    public List<String> getAllDates(){
+        List<String> dateList = new ArrayList<>();
+        String queryDate = "";
+        queryDate = "SELECT * FROM EVENTS_TABLE ";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryDate, null);
+        if (cursor.moveToFirst()) {
+            do {
+//                if event is not alredy present create new one else increase count
+                String date = cursor.getString(3);
+                if(!dateList.contains(date)){
+//                   Log.i("not present asdfasdf",date);
+                    dateList.add(date);
+                }
+            } while (cursor.moveToNext());
+        }
+        return dateList;
+    }
+
+
+
 
 }

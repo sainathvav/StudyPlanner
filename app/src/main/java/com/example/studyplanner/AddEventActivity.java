@@ -73,6 +73,8 @@ public class AddEventActivity extends AppCompatActivity {
                             }
                         }, Year, Month, Day);
                 datePickerDialog.show();
+
+
             }
         });
 
@@ -96,7 +98,7 @@ public class AddEventActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(AddEventActivity.this, "Failed to add new event", Toast.LENGTH_LONG).show();
                 }
-                Intent intent = new Intent(AddEventActivity.this, MainActivity.class);
+                Intent intent = new Intent(AddEventActivity.this, LeftSlideBarActivity.class);
                 startActivity(intent);
                 finish();
             }
