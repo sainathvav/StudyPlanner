@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/lightYello"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title : "
-                android:textColor="@color/teal_200"
+                android:textColor="@color/brownBlack"
                 android:textSize="18sp" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date : "
-                android:textColor="@color/teal_200"
+                android:textColor="@color/brownBlack"
                 android:textSize="18sp" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time : "
-                android:textColor="@color/teal_200"
+                android:textColor="@color/brownBlack"
                 android:textSize="18sp" />
 
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description : "
-                android:textColor="@color/teal_200"
+                android:textColor="@color/brownBlack"
                 android:textSize="18sp" />
 
             <TextView

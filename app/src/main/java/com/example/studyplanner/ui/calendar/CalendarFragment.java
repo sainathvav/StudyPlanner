@@ -83,8 +83,9 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onDayClick(Date dateClicked) {
                 // get info from database
-                String date = (String) DateFormat.format("dd-MM-yyyy",dateClicked);
-                dateView.setText(date);
+                String dateForView = (String) DateFormat.format("dd-MM-yyyy",dateClicked);
+                dateView.setText(dateForView);
+                String date = (String) DateFormat.format("dd/MM/yyyy",dateClicked);
 
                 // function to display data
 
