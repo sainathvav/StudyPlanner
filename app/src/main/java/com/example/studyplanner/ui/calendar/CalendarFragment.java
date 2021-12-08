@@ -56,7 +56,7 @@ public class CalendarFragment extends Fragment {
         month = root.findViewById(R.id.monthView);
         Calendar cal = Calendar.getInstance();
 
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
         String month_name = month_date.format(cal.getTime());
         month.setText(month_name);
 
@@ -94,7 +94,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 Log.i("Month",""+ firstDayOfNewMonth + (String) DateFormat.format("MMM",  firstDayOfNewMonth)); // Jun);
-                String monthString  = (String) DateFormat.format("MMMM",  firstDayOfNewMonth);
+                String monthString  = (String) DateFormat.format("MMMM yyyy",  firstDayOfNewMonth);
                 month.setText(monthString);
             }
         });

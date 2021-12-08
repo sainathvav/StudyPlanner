@@ -18,6 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/lightYello"
+            app:tabPaddingBottom="0dp"
+            app:tabPaddingEnd="2dp"
+            app:tabPaddingStart="2dp"
+            app:tabPaddingTop="0dp"
             />
     </com.google.android.material.appbar.AppBarLayout>
 
