@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
@@ -126,17 +127,26 @@ public class AddEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(AddEventActivity.this);
 
-                boolean result = dataBaseHelper.addEvent(new Event(type, eventTitle.getText().toString(),
-                        eventDate.getText().toString(), eventTime.getText().toString(), eventDescription.getText().toString()));
-                if (result) {
-                    Toast.makeText(AddEventActivity.this, "Successfully added a new event", Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(eventTitle.getText().toString().trim())) {
+                    eventTitle.setError("Event title can't be empty");
+                    eventTitle.requestFocus();
+                }
+                else if (TextUtils.isEmpty(eventDate.getText().toString().trim())) {
+                    eventDate.setError("Date can't be empty");
+                    eventDate.requestFocus();
                 }
                 else {
-                    Toast.makeText(AddEventActivity.this, "Failed to add new event", Toast.LENGTH_LONG).show();
+                    boolean result = dataBaseHelper.addEvent(new Event(type, eventTitle.getText().toString(),
+                            eventDate.getText().toString(), eventTime.getText().toString(), eventDescription.getText().toString()));
+                    if (result) {
+                        Toast.makeText(AddEventActivity.this, "Successfully added a new event", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(AddEventActivity.this, "Failed to add new event", Toast.LENGTH_LONG).show();
+                    }
+                    Intent intent = new Intent(AddEventActivity.this, LeftSlideBarActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-                Intent intent = new Intent(AddEventActivity.this, LeftSlideBarActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
     }
