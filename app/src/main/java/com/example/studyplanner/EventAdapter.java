@@ -49,14 +49,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyHolder> {
             public void onClick(View v) {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(v.getContext());
                 boolean result = dataBaseHelper.removeEvent(list.get(position));
-                if (result) {
-                    Toast.makeText(v.getContext(), "Successfully removed the event",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(v.getContext(), LeftSlideBarActivity.class);
-                    context.startActivity(intent);
-                }
-                else {
-                    //Toast.makeText(v.getContext(), "Failed",Toast.LENGTH_LONG).show();
-                }
+
+                //Toast.makeText(v.getContext(), "Successfully removed the event",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), LeftSlideBarActivity.class);
+                context.startActivity(intent);
+
             }
         });
 
