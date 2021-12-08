@@ -71,6 +71,15 @@ public class CalendarFragment extends Fragment {
 
         String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         dateView.setText(date);
+        String date2 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        DataBaseHelper dataBaseHelper1 = new DataBaseHelper(getContext());
+        DateEvent dateEvent = dataBaseHelper1.getEventCount(date2);
+        if (dateEvent != null) {
+            studyCount.setText(Integer.toString(dateEvent.getStudyCount()));
+            assignCount.setText(Integer.toString(dateEvent.getAssignCount()));
+            examCount.setText(Integer.toString(dateEvent.getExamsCount()));
+            lectureCount.setText(Integer.toString(dateEvent.getLectureCount()));
+        }
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
         List<String> listDate = new ArrayList<>();
